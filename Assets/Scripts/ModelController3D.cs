@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModelController : MonoBehaviour
+public class ModelController3D : MonoBehaviour
 {
     private Animator animator;
     private TCPServer server;
@@ -15,21 +15,17 @@ public class ModelController : MonoBehaviour
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
-        Debug.Log("Animator", animator);
+
         server = GetComponent<TCPServer>();
-        Debug.Log("Server", server);
     }
 
     // Update is called once per frame
     void Update()
     {   
         if ((server.data != null) && (server.data != "")) {
-            Debug.Log(server.data);
             state.FromData(server.data);
-
-            animator.GetBoneTransform(HumanBodyBones.Neck).rotation = Quaternion.Euler(state.pitch, state.yaw, state.roll) * defaultNeckQuaternion;
-
-
         }
+
+        animator.GetBoneTransform(HumanBodyBones.Neck).rotation = Quaternion.Euler(state.pitch, state.yaw, state.roll) * defaultNeckQuaternion;
     }
 }
