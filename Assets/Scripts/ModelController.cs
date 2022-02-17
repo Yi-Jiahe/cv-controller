@@ -13,7 +13,27 @@ public class ModelController : MonoBehaviour
 
     private State state = new State();
 
+    public float ear_min = 0.1f;
+    public float ear_max = 0.6f;
+    public float iris_ratio_x_min = 0.3333f;
+    public float iris_ratio_x_max = 0.6667f;
+    public float iris_ratio_y_min = 0.4f;
+    public float iris_ratio_y_max = 0.6f;
+    public float mar_min = 0f;
+    public float mar_max = 0.8f;
+
+
     private float _t;
+
+    public float ParamEyeOpen_min = 0f;
+    public float ParamEyeOpen_max = 1.2f;
+    public float ParamEyeBallX_min = -1f;
+    public float ParamEyeBallX_max = 1f;
+    public float ParamEyeBallY_min = -1f;
+    public float ParamEyeBallY_max = 1f;
+    public float ParamMouthOpenY_min = 0f;
+    public float ParamMouthOpenY_max = 1f;
+
 
     private Quaternion defaultNeckQuaternion = Quaternion.Euler(0, 90, -90);
 
@@ -63,13 +83,21 @@ public class ModelController : MonoBehaviour
             // roll
             model.Parameters.FindById("ParamAngleZ").Value = -Mathf.Clamp(state.roll, -30, 30);
 
-            model.Parameters.FindById("ParamEyeROpen").Value = state.ear_left;
-            model.Parameters.FindById("ParamEyeLOpen").Value = state.ear_right;
+            model.Parameters.FindById("ParamEyeROpen").Value = ClampAndScale(state.ear_left, ear_min, ear_max, ParamEyeOpen_min, ParamEyeOpen_max);
+            model.Parameters.FindById("ParamEyeLOpen").Value = ClampAndScale(state.ear_right, ear_min, ear_max, ParamEyeOpen_min, ParamEyeOpen_max);
 
-            model.Parameters.FindById("ParamEyeBallX").Value = state.iris_ratio_x;
-            model.Parameters.FindById("ParamEyeBallY").Value = state.iris_ratio_y;
+            model.Parameters.FindById("ParamEyeBallX").Value = ClampAndScale(state.iris_ratio_x, iris_ratio_x_min, iris_ratio_x_max, ParamEyeBallX_min, ParamEyeBallX_max);
+            model.Parameters.FindById("ParamEyeBallY").Value = ClampAndScale(state.iris_ratio_y, iris_ratio_y_min, iris_ratio_y_max, ParamEyeBallY_min, ParamEyeBallY_max);
 
-            model.Parameters.FindById("ParamMouthOpenY").Value = state.mar;
+            model.Parameters.FindById("ParamMouthOpenY").Value = ClampAndScale(state.mar, mar_min, mar_max, ParamMouthOpenY_min, ParamMouthOpenY_max);
         }
+    }
+
+    private float ClampAndScale(float input, float minIn, float maxIn, float minOut, float maxOut) {
+        float clamped = Mathf.Clamp(input, minIn, maxIn);
+        float rangeIn = maxIn - minIn;
+        float rangeOut = maxOut - minOut;
+        float scale = rangeOut/rangeIn;
+        return (clamped - minIn + minOut) * scale;
     }
 }
