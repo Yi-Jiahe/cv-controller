@@ -20,6 +20,7 @@ public class ControllersDiv : MonoBehaviour
         GameObject newControllerDiv = Instantiate(controllerDiv, this.transform);
         newControllerDiv.name = "Controller-Div-" + _createdControllers;
         newControllerDiv.GetComponent<ControllerDiv>().id = _createdControllers.ToString();
+        
         _createdControllers += 1;
     }
 }

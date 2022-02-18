@@ -8,6 +8,9 @@ using TMPro;
 public class ControllerDiv : MonoBehaviour
 {
     public string id;
+
+    public GameObject modelDiv;
+
     private int _createdModels = 0;
 
     private TCPServer _server;
@@ -55,11 +58,22 @@ public class ControllerDiv : MonoBehaviour
 
     public void NewModelCallback() {
         var model = Live2DModelLoader.LoadModel();
-        model.name = "Model-" + id + "-" +_createdModels;
 
-        GameObject.Find("Controller-" + id).GetComponent<ModelController>().AddLive2DModel(model);
+        string modelId = id + "-" +_createdModels.ToString();
+
+        model.name = "Model-" + modelId;
+
+        GameObject.Find("Controller-" + id).GetComponent<ModelController>().AddLive2DModel(modelId, model);
+
+        GameObject newModelDiv = Instantiate(modelDiv, this.transform);
+        newModelDiv.name = "Model-Div-" + modelId;
+        newModelDiv.GetComponent<ModelDiv>().id = modelId;
 
         _createdModels += 1;
+    }
+
+    public void onClick() {
+        GameObject.Find("EventSystem").GetComponent<UI>().ActiveModel = GameObject.Find("Controller-" + id);
     }
 
     private void DestroyGameObject() {

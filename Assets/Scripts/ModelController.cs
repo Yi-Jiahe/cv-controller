@@ -6,10 +6,22 @@ using UnityEngine;
 
 public class ModelController : MonoBehaviour
 {
+    private class _Model {
+        public enum ModelType
+        {
+            Live2D,
+            ThreeD,
+        }
+
+        public ModelType modelType;
+        
+        public CubismModel cubismModel;
+        public Animator animator;
+    }
+
     private TCPServer server;
 
-    private List<CubismModel> live2Dmodels = new List<CubismModel>();
-    private List<Animator> animators = new List<Animator>();
+    private Dictionary<string, _Model> models = new Dictionary<string, _Model>();
 
     private State state = new State();
 
@@ -41,18 +53,6 @@ public class ModelController : MonoBehaviour
     void Start()
     {
         server = GetComponent<TCPServer>();
-
-        foreach (Transform transform in this.gameObject.transform){
-            CubismModel model = transform.FindCubismModel();
-            if (model) {
-                live2Dmodels.Add(model);
-            } else {
-                animators.Add(transform.GetComponentInChildren<Animator>());
-            }
-        }
-
-        Debug.Log("live2D Models: " + live2Dmodels.Count);
-        Debug.Log("Animators:" + animators.Count);
     }
 
     // Update is called once per frame
@@ -61,43 +61,58 @@ public class ModelController : MonoBehaviour
         if ((server.data != null) && (server.data != "")) {
             state.FromData(server.data);
         }
-
-        foreach (Animator animator in animators) {
-            animator.GetBoneTransform(HumanBodyBones.Neck).rotation = Quaternion.Euler(state.pitch, state.yaw, state.roll) * defaultNeckQuaternion;
-        }
     }
 
     void LateUpdate()
     {
-        foreach (CubismModel model in live2Dmodels) {
-            // Standard Parameter ID list
-            // https://docs.live2d.com/cubism-editor-manual/standard-parametor-list/?locale=en_us
+        _t += Time.deltaTime;
+        foreach (KeyValuePair<string, _Model> modelMapping in models) {
+            _Model model = modelMapping.Value;
+            switch (model.modelType) {
+                case _Model.ModelType.Live2D:
+                    // Standard Parameter ID list
+                    // https://docs.live2d.com/cubism-editor-manual/standard-parametor-list/?locale=en_us
 
-            _t += Time.deltaTime;
-            model.Parameters.FindById("ParamBreath").Value = 0.5f + 0.5f * Mathf.Sin(_t * 2f);
+                    model.cubismModel.Parameters.FindById("ParamBreath").Value = 0.5f + 0.5f * Mathf.Sin(_t * 2f);
 
-            // yaw
-            model.Parameters.FindById("ParamAngleX").Value = -Mathf.Clamp(state.yaw, -30, 30);
-            // pitch
-            model.Parameters.FindById("ParamAngleY").Value = Mathf.Clamp(state.pitch, -30, 30);
-            // roll
-            model.Parameters.FindById("ParamAngleZ").Value = -Mathf.Clamp(state.roll, -30, 30);
+                    // yaw
+                    model.cubismModel.Parameters.FindById("ParamAngleX").Value = -Mathf.Clamp(state.yaw, -30, 30);
+                    // pitch
+                    model.cubismModel.Parameters.FindById("ParamAngleY").Value = Mathf.Clamp(state.pitch, -30, 30);
+                    // roll
+                    model.cubismModel.Parameters.FindById("ParamAngleZ").Value = -Mathf.Clamp(state.roll, -30, 30);
 
-            model.Parameters.FindById("ParamEyeROpen").Value = ClampAndScale(state.ear_left, ear_min, ear_max, ParamEyeOpen_min, ParamEyeOpen_max);
-            model.Parameters.FindById("ParamEyeLOpen").Value = ClampAndScale(state.ear_right, ear_min, ear_max, ParamEyeOpen_min, ParamEyeOpen_max);
+                    model.cubismModel.Parameters.FindById("ParamEyeROpen").Value = ClampAndScale(state.ear_left, ear_min, ear_max, ParamEyeOpen_min, ParamEyeOpen_max);
+                    model.cubismModel.Parameters.FindById("ParamEyeLOpen").Value = ClampAndScale(state.ear_right, ear_min, ear_max, ParamEyeOpen_min, ParamEyeOpen_max);
 
-            model.Parameters.FindById("ParamEyeBallX").Value = ClampAndScale(state.iris_ratio_x, iris_ratio_x_min, iris_ratio_x_max, ParamEyeBallX_min, ParamEyeBallX_max);
-            model.Parameters.FindById("ParamEyeBallY").Value = ClampAndScale(state.iris_ratio_y, iris_ratio_y_min, iris_ratio_y_max, ParamEyeBallY_min, ParamEyeBallY_max);
+                    model.cubismModel.Parameters.FindById("ParamEyeBallX").Value = ClampAndScale(state.iris_ratio_x, iris_ratio_x_min, iris_ratio_x_max, ParamEyeBallX_min, ParamEyeBallX_max);
+                    model.cubismModel.Parameters.FindById("ParamEyeBallY").Value = ClampAndScale(state.iris_ratio_y, iris_ratio_y_min, iris_ratio_y_max, ParamEyeBallY_min, ParamEyeBallY_max);
 
-            model.Parameters.FindById("ParamMouthOpenY").Value = ClampAndScale(state.mar, mar_min, mar_max, ParamMouthOpenY_min, ParamMouthOpenY_max);
+                    model.cubismModel.Parameters.FindById("ParamMouthOpenY").Value = ClampAndScale(state.mar, mar_min, mar_max, ParamMouthOpenY_min, ParamMouthOpenY_max);
+
+                    break;
+                case _Model.ModelType.ThreeD:
+                    model.animator.GetBoneTransform(HumanBodyBones.Neck).rotation = Quaternion.Euler(state.pitch, state.yaw, state.roll) * defaultNeckQuaternion;
+
+                    break;
+            }
         }
     }
 
-    public void AddLive2DModel(CubismModel model) {
-        model.transform.parent = gameObject.transform;
-        model.transform.localPosition = new Vector3(0, 0, 0);
+    public void AddLive2DModel(string id, CubismModel cubismModel) {
+        cubismModel.transform.parent = gameObject.transform;
+        cubismModel.transform.localPosition = new Vector3(0, 0, 0);
 
-        live2Dmodels.Add(model);
+        _Model newModel = new _Model();
+        newModel.modelType = _Model.ModelType.Live2D;
+        newModel.cubismModel = cubismModel;
+        models.Add(id, newModel);
+    }
+
+
+    public void DeleteModel(string id) {
+        models.Remove(id);
+        Destroy(GameObject.Find("Model-" + id));
     }
 
     public void DeleteGameObject() {
