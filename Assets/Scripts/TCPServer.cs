@@ -19,9 +19,17 @@ public class TCPServer : MonoBehaviour
 
     private Thread t;
 
+    void OnDestroy() {
+        if (t != null) {
+            StopServer();
+        }
+    } 
+
     void OnApplicationQuit()
     {
-        StopServer();
+        if (t != null) {
+            StopServer();
+        }
     }
 
     public void StartServer() {

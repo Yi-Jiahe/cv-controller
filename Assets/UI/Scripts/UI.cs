@@ -5,27 +5,34 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-    public GameObject controller;
-    public GameObject controllerDiv;
+    public GameObject ActiveModel;
+    public float mouseSensitivity = 5f;
 
-    private int _createdControllers = 0;
+    private Vector3 _initialMousePosition;
+    private Vector3 _initalModelPosition;
 
-    public void NewControllerCallback() {
-        GameObject controllers = GameObject.Find("Controllers");
+    void Update () {
+        if (ActiveModel) {
+            if (Input.GetMouseButtonDown(0))
+            {
+                _initialMousePosition = Input.mousePosition;
+                _initalModelPosition = ActiveModel.transform.position;
+                // Debug.Log(_initialMousePosition);
+            }
 
-        GameObject newController = Instantiate(controller, controllers.transform);
-        newController.name = "Controller " + _createdControllers;
-        TCPServer server = newController.GetComponent<TCPServer>();
-        server.port = 5066 + _createdControllers;
+            if (Input.GetMouseButton(0))
+            {
+                Resolution currentResolution = Screen.currentResolution;
 
-        GameObject controllersDiv = GameObject.Find("Controllers Div");
-        GameObject newControllerDiv = Instantiate(controllerDiv, controllersDiv.transform);
-        newControllerDiv.name = "Controller Div " + _createdControllers;
-
-        _createdControllers += 1;
+                ActiveModel.transform.position = _initalModelPosition + Vector3.Scale(Input.mousePosition - _initialMousePosition, new Vector3 (mouseSensitivity/currentResolution.width , mouseSensitivity/currentResolution.height , 0));
+            }
+        }
     }
 
-    public void DeleteControllerCallBack(int controllerId) {
-        Debug.Log(this);
+    void FixedUpdate()
+    {
+      
+
+
     }
 }

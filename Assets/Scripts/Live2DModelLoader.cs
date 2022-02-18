@@ -11,7 +11,7 @@ public class Live2DModelLoader : MonoBehaviour
 {
     public static CubismModel LoadModel() {
         //Load model.
-        var path = Application.dataPath + "/hiyori_free_en/runtime/hiyori_free_t08.model3.json";
+        var path = Application.streamingAssetsPath + "/hiyori_free_en/runtime/hiyori_free_t08.model3.json";
         var model3Json = CubismModel3Json.LoadAtPath(path, BuiltinLoadAssetAtPath);
 
         CubismModel model = model3Json.ToModel();
