@@ -93,6 +93,13 @@ public class ModelController : MonoBehaviour
         }
     }
 
+    public void AddLive2DModel(CubismModel model) {
+        model.transform.parent = gameObject.transform;
+        model.transform.localPosition = new Vector3(0, 0, 0);
+
+        live2Dmodels.Add(model);
+    }
+
     public void DeleteGameObject() {
         Destroy(gameObject);
     }

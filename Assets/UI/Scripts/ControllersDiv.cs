@@ -13,12 +13,11 @@ public class ControllersDiv : MonoBehaviour
         GameObject controllers = GameObject.Find("Controllers");
 
         GameObject newController = Instantiate(controller, controllers.transform);
-        newController.name = "Controller " + _createdControllers;
-        TCPServer server = newController.GetComponent<TCPServer>();
-        server.port = 5066 + _createdControllers;
+        newController.name = "Controller-" + _createdControllers;
+        newController.GetComponent<TCPServer>().port = 5066 + _createdControllers;
 
         GameObject newControllerDiv = Instantiate(controllerDiv, this.transform);
-        newControllerDiv.name = "Controller Div " + _createdControllers;
+        newControllerDiv.name = "Controller-Div-" + _createdControllers;
         newControllerDiv.GetComponent<ControllerDiv>().id = _createdControllers.ToString();
 
         _createdControllers += 1;
