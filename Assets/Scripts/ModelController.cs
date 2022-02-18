@@ -93,6 +93,10 @@ public class ModelController : MonoBehaviour
         }
     }
 
+    public void DeleteGameObject() {
+        Destroy(gameObject);
+    }
+
     private float ClampAndScale(float input, float minIn, float maxIn, float minOut, float maxOut) {
         float clamped = Mathf.Clamp(input, minIn, maxIn);
         float rangeIn = maxIn - minIn;
