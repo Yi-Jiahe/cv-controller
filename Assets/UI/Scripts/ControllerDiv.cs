@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -65,7 +66,14 @@ public class ControllerDiv : MonoBehaviour
     }
 
     public void NewModelCallback() {
-        var model = Live2DModelLoader.LoadModel();
+
+        string path = EditorUtility.OpenFilePanel("Select file", Application.streamingAssetsPath, "json");
+        if (path.Length == 0) {
+            return;
+        }
+
+        var model = Live2DModelLoader.LoadModel(path);
+
 
         string modelId = id + "-" +_createdModels.ToString();
 
