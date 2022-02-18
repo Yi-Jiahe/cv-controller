@@ -19,8 +19,11 @@ public class ControllerDiv : MonoBehaviour
     private TMP_InputField _portInput;
     private Toggle _serverToggle;
 
+    private RectTransform _root;
 
     void Start() {
+        _root = GameObject.Find("Controllers Div").GetComponent<RectTransform>();
+
         _server = GameObject.Find("Controller-" + id).GetComponent<TCPServer>();
 
         Transform addressInputTransform = gameObject.transform.transform.Find("Address Input");
@@ -56,6 +59,11 @@ public class ControllerDiv : MonoBehaviour
         }
     }
 
+    void OnDestroy() {
+        Debug.Log(_root);
+        LayoutRebuilder.MarkLayoutForRebuild(_root);
+    }
+
     public void NewModelCallback() {
         var model = Live2DModelLoader.LoadModel();
 
@@ -66,6 +74,10 @@ public class ControllerDiv : MonoBehaviour
         GameObject.Find("Controller-" + id).GetComponent<ModelController>().AddLive2DModel(modelId, model);
 
         GameObject newModelDiv = Instantiate(modelDiv, this.transform);
+
+        Debug.Log(_root);
+
+        LayoutRebuilder.MarkLayoutForRebuild(_root);
         newModelDiv.name = "Model-Div-" + modelId;
         newModelDiv.GetComponent<ModelDiv>().id = modelId;
 

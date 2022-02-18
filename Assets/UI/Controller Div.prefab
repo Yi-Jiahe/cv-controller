@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 62.5545, y: 20}
+  m_SizeDelta: {x: 60.8013, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1861063524057367525
 MonoBehaviour:
@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 2298902526759492319}
   - component: {fileID: 7193339200225157087}
   - component: {fileID: 3199187139250188985}
+  - component: {fileID: 590535866445349807}
   m_Layer: 5
   m_Name: Controller Div
   m_TagString: Untagged
@@ -138,8 +139,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 43.402405, y: -11.1604}
-  m_SizeDelta: {x: 274.253, y: 122.3207}
+  m_AnchoredPosition: {x: 37.9, y: -7.0315857}
+  m_SizeDelta: {x: 271.9663, y: 119.3573}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4604577651218086117
 MonoBehaviour:
@@ -275,6 +276,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &590535866445349807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323955524618370876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 0
 --- !u!1 &326404347784887411
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,7 +715,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 30}
+  m_SizeDelta: {x: 57.6111, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5779967190545089153
 CanvasRenderer:
@@ -875,7 +890,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 235.6078, y: 32.2362}
+  m_SizeDelta: {x: 271.97, y: 32.2362}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6947932100476122415
 MonoBehaviour:
@@ -894,7 +909,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -940,7 +955,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 120, y: 30}
+  m_SizeDelta: {x: 136.649, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3327274900618845666
 CanvasRenderer:
@@ -1115,7 +1130,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 41.4804, y: 38.7994}
+  m_SizeDelta: {x: 40.694, y: 41.1587}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3162682347411775076
 CanvasRenderer:
@@ -1727,7 +1742,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 255.6887, y: 43.4368}
+  m_SizeDelta: {x: 271.97, y: 37.9848}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2227771955802518047
 MonoBehaviour:
@@ -1935,7 +1950,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -16.515404, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2105,7 +2120,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 294.7312, y: 44.8107}
+  m_SizeDelta: {x: 271.97, y: 44.8107}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1793114679414103840
 MonoBehaviour:
@@ -2168,7 +2183,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 226.3459, y: 44.811}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7733964651366207455
 CanvasRenderer:
@@ -2303,7 +2318,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 247.8482, y: 50.5681}
+  m_SizeDelta: {x: 271.97, y: 50.5681}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6510053154193303450
 MonoBehaviour:
