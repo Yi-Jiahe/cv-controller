@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4670367554279691442}
   - component: {fileID: 1861063524057367525}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: ServerToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,8 +84,20 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 1
+      m_Calls:
+      - m_Target: {fileID: 8259547850319615324}
+        m_TargetAssemblyTypeName: ControllerDiv, Assembly-CSharp
+        m_MethodName: ServerToggleCallback
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  m_IsOn: 0
 --- !u!1 &323955524618370876
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,7 +578,7 @@ GameObject:
   - component: {fileID: 3759527660275755910}
   - component: {fileID: 2135717677618565270}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: Port
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -806,7 +818,7 @@ GameObject:
   - component: {fileID: 1644748280174883320}
   - component: {fileID: 8138329975213145743}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: HostIp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

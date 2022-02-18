@@ -19,27 +19,22 @@ public class TCPServer : MonoBehaviour
 
     private Thread t;
 
-    // Start is called before the first frame update
-    void Start()
+    void OnApplicationQuit()
     {
-        t = new Thread(new ThreadStart(StartServer));
+        StopServer();
+    }
+
+    public void StartServer() {
+        t = new Thread(new ThreadStart(_StartServer));
         t.IsBackground = true;
         t.Start();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void StopServer() {
+        t.Abort();
     }
 
-    void OnApplicationQuit()
-    {
-        // close the thread when the application quits
-            t.Abort();
-    }
-
-    private void StartServer() {
+    private void _StartServer() {
         TcpListener server=null;
         try {
                 IPAddress addr = IPAddress.Parse(hostIp);
